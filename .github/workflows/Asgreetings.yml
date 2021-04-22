@@ -1,0 +1,108 @@
+name: Greetings
+
+on: [pull_request, issues]
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/first-interaction@v1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        issue-message: 'Message that will be displayed on users first issue'
+        pr-message: 'Message that will be displayed on users first pull request'
+- name: go-sync
+  # You may pin to the exact commit or the version.
+  # uses: x-actions/go-sync@db567f9495de882574abea4df0d3851d37829ebb
+  uses: x-actions/go-sync@v1.1.0
+  with:
+    # cdn type
+    CDNTYPE: # default is aliyun
+    # CDN Access Key ID
+    ACCESSKEYID: 
+    # CDN Access Key Secret
+    ACCESSKEYSECRET: 
+    # CDN Bucket Endpoint
+    ENDPOINT: 
+    # CDN Bucket Name
+    BUCKETNAME: 
+    # the cache file path
+    CACHEFILE: # optional
+    # exclude file or dir, comma-separated string
+    EXCLUDE: # optional
+    # the source dir public to cdn
+    SUB_DIR: 
+    - name: Package Latest Version
+  uses: Bruce17/ghaction-package-latest-version@v1.1.0
+
+- name: Run Parasoft dotTEST
+  # You may pin to the exact commit or the version.
+  # uses: parasoft/run-dottest-action@9f0bb4752726048d9a327a3bb90bda9973435561
+  uses: parasoft/run-dottest-action@1.2.1
+  with:
+    # Path to the working directory.
+    workingDir: # optional, default is ${{ github.workspace }}
+    # Path to the dotTEST installation directory, which contains dottestcli.exe. If not specified, dottestcli.exe will be searched for on PATH.
+    installDir: # optional
+    # Path to the solution to be analyzed. Specify a semicolon-separated list of paths to analyze many solutions. Supports ANT-style wildcards.
+    solution: # optional, default is .\*.sln
+    # Path to the project to be analyzed when no solution is provided. Specify a semicolon-separated list of paths to analyze many projects. Supports ANT-style wildcards.
+    project: # optional
+    # Full path to the website directory to be analyzed when no solution is provided.
+    website: # optional
+    # URL of the test configuration to be used for analysis.
+    testConfig: # optional, default is builtin://Recommended .NET Core Rules
+    # Solution-relative path to a project in a solution, a directory of files in a project, or a file.
+    resource: # optional
+    # File system paths to files to include in analysis. Supports ANT-style wildcards. If not specified, all files are analyzed.
+    include: # optional
+    # File system paths to files to exclude from analysis. Supports ANT-style wildcards.
+    exclude: # optional
+    # Path to additional assemblies required to resolve dependencies. Specify a semicolon-separated list of paths to provide many references. Supports ANT-style wildcards.
+    reference: # optional
+    # Path to the directory where the report will be created.
+    reportDir: # optional, default is ${{ github.workspace }}/.dottest/report/${{ github.run_number }}
+    # Publishes report to DTP.
+    publish: # optional
+    # Path to a settings file.
+    settings: # optional
+    # A single configuration setting in the "key=value" format.
+    property: # optional
+    # Disables the build of the tested solutions or projects.
+    nobuild: # optional
+    # Runs tests that are tagged with specific issue tracking types/IDs.
+    testTagFilter: # optional
+    # Solution configuration, e.g. "Debug".
+    solutionConfig: # optional
+    # Project configuration, e.g. "Debug".
+    projectConfig: # optional
+    # Target platform of the solution configuration (e.g."Any CPU") or project configuration (e.g. "AnyCPU").
+    targetPlatform: # optional
+    # Path to the location where console output is saved.
+    out: # optional
+    # Fails the command with exit code 2 or 4 if any findings are reported. It is recommended to use it with continue-on-error: true.
+    fail: # optional
+    # Lists all settings that are currently used.
+    showsettings: # optional
+    # 'Mode for GitHub report (SARIF) generation. You can use:
+    # - "legacy" - for dotTEST 2020.2 or older
+    # - "builtin" - for dotTEST 2021.1 or newer (default)
+    sarifMode: # optional, default is builtin
+    
+    - name: Datadog Action
+  # You may pin to the exact commit or the version.
+  # uses: masci/datadog@f7659ba53baea7b6ab49275ffcc4cdfd627a3c4e
+  uses: masci/datadog@v1.1.0
+  with:
+    # A valid Datadog API Key
+    api-key: 
+    # The URL of the API endpoint, defaults to US datacenter
+    api-url: # optional, default is https://api.datadoghq.com
+    # A list of metrics objects to send, see docs for details
+    metrics: # optional, default is []
+    # A list of event objects to send, see docs for details
+    events: # optional, default is []
+    - name: Action GitHub Deployment
+  # You may pin to the exact commit or the version.
+  # uses: ReasonSoftware/action-github-deployment@ba32b99a0704767b0859f1b33434ffd0964fb60c
+  uses: ReasonSoftware/action-github-deployment@v1.0.0
