@@ -1,0 +1,76 @@
+name: Python Package using Conda
+
+on: [push]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 5
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Add conda to system path
+      run: |
+        # $CONDA is an environment variable pointing to the root of the miniconda directory
+        echo $CONDA/bin >> $GITHUB_PATH
+    - name: Install dependencies
+      run: |
+        conda env update --file environment.yml --name base
+    - name: Lint with flake8
+      run: |
+        conda install flake8
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Test with pytest
+      run: |
+        conda install pytest
+        pytest
+- name: go-sync
+  # You may pin to the exact commit or the version.
+  # uses: x-actions/go-sync@db567f9495de882574abea4df0d3851d37829ebb
+  uses: x-actions/go-sync@v1.1.0
+  with:
+    # cdn type
+    CDNTYPE: # default is aliyun
+    # CDN Access Key ID
+    ACCESSKEYID: 
+    # CDN Access Key Secret
+    ACCESSKEYSECRET: 
+    # CDN Bucket Endpoint
+    ENDPOINT: 
+    # CDN Bucket Name
+    BUCKETNAME: 
+    # the cache file path
+    CACHEFILE: # optional
+    # exclude file or dir, comma-separated string
+    EXCLUDE: # optional
+    # the source dir public to cdn
+    SUB_DIR: 
+    - name: Go Formatter
+  # You may pin to the exact commit or the version.
+  # uses: sladyn98/auto-go-format@6557e892479fd174506c48cb34017c51399d492b
+  uses: sladyn98/auto-go-format@v0.0.1
+  - name: go-cross-build
+  # You may pin to the exact commit or the version.
+  # uses: thatisuday/go-cross-build@542468fed9c6be3220a6cead66abff3943e41a5d
+  uses: thatisuday/go-cross-build@v1.1.0
+  with:
+    # Comma-separated list of "<kernel>/<arch>" combinations.
+    platforms: # optional, default is linux/386,linux/amd64
+    # Package (directory) in the module to build. By default, builds the module directory.
+    package: # optional, default is 
+    # Compress each build file inside a ".tar.gz" archive.
+    compress: # optional, default is false
+    # Binary executable filename and filenames prefix for the build files.
+    name: # optional, default is program
+    # Destination directory inside workspace to output build-artifacts.
+    dest: # optional, default is build
+    # Flags to pass to the Go linker.
+    ldflags: # optional, default is 
