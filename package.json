@@ -29,7 +29,7 @@
     "@types/webpack": "^5.28.0",
     "@types/webpack-env": "^1.15.2",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
-    "@typescript-eslint/parser": "^4.4.1",
+    "@typescript-eslint/parser": "^4.22.0",
     "asar": "^3.0.3",
     "aws-sdk": "^2.890.0",
     "check-for-leaks": "^1.2.1",
