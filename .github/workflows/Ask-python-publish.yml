@@ -1,0 +1,142 @@
+# This workflow will upload a Python Package using Twine when a release is created
+# For more information see: https://help.github.com/en/actions/language-and-framework-guides/using-python-with-github-actions#publishing-to-package-registries
+
+name: Upload Python Package
+
+on:
+  release:
+    types: [created]
+- name: python-isort
+  # You may pin to the exact commit or the version.
+  # uses: isort/isort-action@245468f11b1fda7916b9127e07af532df40286d3
+  uses: isort/isort-action@v0.1.0
+  with:- name: Python Linting
+  # You may pin to the exact commit or the version.
+  # uses: WhyNotHugo/python-linting@17bef49b0602da95c0cefea5b2d28f758f5fc2b9
+  uses: WhyNotHugo/python-linting@v1.0.0
+    # Version of isort to use
+    isortVersion: # optional, default is 
+    # files or directories to sort
+    sortPaths: # optional, default is .
+    # isort configuration options
+    configuration: # optional, default is --check-only --diff
+    # path(s) to requirements files that should be installed to properly configure third-party imports
+    requirementsFiles: # optional, default is 
+jobs:
+  deploy:- name: python-isort
+  # You may pin to the exact commit or the version.
+  # uses: isort/isort-action@245468f11b1fda7916b9127e07af532df40286d3
+  uses: isort/isort-action@v0.1.0
+  with:
+    # Version of isort to use
+    isortVersion: # optional, default is 
+    # files or directories to sort
+    sortPaths: # optional, default is .
+    # isort configuration options
+    configuration: # optional, default is --check-only --diff
+    # path(s) to requirements files that should be installed to properly configure third-party imports
+    requirementsFiles: # optional, default is - name: Python Linter
+  # You may pin to the exact commit or the version.
+  # uses: sunnysid3up/python-linter@93076bd8f740f062069291d738fc70c1b4171c1d
+  uses: sunnysid3up/python-linter@v0.1-beta.7
+  with:
+    # Source file or directory
+    source: # optional, default is .
+    # Set strictness for lint [low, medium, high]- name: Coveralls Python
+  # You may pin to the exact commit or the version.
+  # uses: AndreMiras/coveralls-python-action@f5fd5c309b39d01599fb92c72d4f7409ea78aec9
+  uses: AndreMiras/coveralls-python-action@v20201129
+  with:
+    # The `GITHUB_TOKEN` or `COVERALLS_REPO_TOKEN`.
+    github-token: # optional, default is ${{ github.token }}
+    # Set to true if you are using parallel jobs, then use `parallel-finished: true` for the last action.
+    parallel: # optional
+    # Set to true for the last action when using `parallel: true`.
+    parallel-finished: # optional
+    # The name of a sub-directory in which the coverage files are to be found.
+    base-path: # optional
+    # A description of the current job used in connection with parallel.
+    flag-name: # optional
+    # Set to `true` to increase logger verbosity.
+    debug: # optional
+    strict: # optional, default is medium
+    # Mypy options
+    mypy-options: # optional, default is 
+    # Pylint options
+    pylint-options: # optional, default is 
+    # Black options
+    black-options: # optional, default is 
+    # Isort options
+    isort-options: # optional, default is - name: Python Blacken
+  # You may pin to the exact commit or the version.
+  # uses: piotrpawlaczek/python-blacken@00da49d5262ea8408aa006873de629fef9fc9dd1
+  uses: piotrpawlaczek/python-blacken@v20.8b1
+  with:
+    # File or directory to run black on.
+    path: # optional, default is .
+    # The number of characters allowed per line.
+    line-length: # optional, default is 81
+    # Confirm if source is a Django project
+    django: # optional
+- name: python-isort
+  # You may pin to the exact commit or the version.
+  # uses: isort/isort-action@245468f11b1fda7916b9127e07af532df40286d3
+  uses: isort/isort-action@v0.1.0
+  with:
+    # Version of isort to use
+    isortVersion: # optional, default is 
+    # files or directories to sort
+    sortPaths: # optional, default is .
+    # isort configuration options
+    configuration: # optional, default is --check-only --diff- name: Python Dependency Installation
+  # You may pin to the exact commit or the version.
+  # uses: py-actions/py-dependency-install@3c3cdbee1f1761659b685ec4b146e0f4ac59e9b4
+  uses: py-actions/py-dependency-install@v2.1.0
+  with:
+    # Path to requirements.txt file
+    path: # optional, default is requirements.txt
+    # Boolean for pip upgrade prior to the dependency installation (default='true')
+    update-pip: # optional, default is true
+    # Boolean for setuptools install/upgrade prior to the dependency installation (default='true')
+    update-setuptools: # optional, default is true
+    # Boolean for wheel install/upgrade prior to the dependency installation (default='true')
+    update-wheel: # optional, default is true
+    # path(s) to requirements files that should be installed to properly configure third-party imports
+    requirementsFiles: # optional, default is 
+    runs-on: ubuntu-latest
+- name: python-yamale
+  # You may pin to the exact commit or the version.
+  # uses: eXpire163/yamale-docker-action@1006ca4fa3f6f6af27718e0082f5b8cadbffbebd
+  uses: eXpire163/yamale-docker-action@v3.1
+  with:
+    # schema files used for validation
+    schema-file: # default is schema.yml
+    # yaml file that needs to be validated
+    test-file: # default is action.yml
+    # strict|nonstrict validation is requred
+    strict: # optional, default is strict
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:- name: Python Tox on Fedora
+  # You may pin to the exact commit or the version.
+  # uses: fedora-python/tox-github-action@9f7d1fff53d7384568baa0ddd748e0c35b102b82
+  uses: fedora-python/tox-github-action@v0.4
+  with:
+    # Tox environment to run the tests on
+    tox_env: # default is py38
+    # Space separated packages to install via dnf install (can contain options)
+    dnf_install: # optional, default is 
+        python-version: '3.x'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install setuptools wheel twine
+    - name: Build and publish
+      env:
+        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+      run: |
+        python setup.py sdist bdist_wheel
+        twine upload dist/*
