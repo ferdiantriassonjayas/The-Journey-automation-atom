@@ -8,7 +8,7 @@
     "@electron/typescript-definitions": "^8.9.4",
     "@octokit/auth-app": "^3.4.0",
     "@octokit/rest": "^18.5.3",
-    "@primer/octicons": "^13.0.0",
+    "@primer/octicons": "^14.1.0",
     "@types/basic-auth": "^1.1.3",
     "@types/busboy": "^0.2.3",
     "@types/chai": "^4.2.12",
